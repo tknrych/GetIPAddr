@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
    print('Request for index page received')
    ipaddr = request.remote_addr
-   return request.remote_addr, 200
+   return ipaddr, 200
 
 @app.route('/favicon.ico')
 def favicon():
