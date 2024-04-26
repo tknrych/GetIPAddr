@@ -8,8 +8,10 @@ app = Flask(__name__)
 def index():
    print('Request for index page received')
    if request.headers.getlist("X-Forwarded-For"):
+      print('X-Forwarded-For')
       ipaddr = request.headers.getlist("X-Forwarded-For")[0]
    else:
+      print('remote_addr')
       ipaddr = request.remote_addr
    return ipaddr, 200
 
