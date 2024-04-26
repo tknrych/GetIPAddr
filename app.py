@@ -11,7 +11,7 @@ def index():
       ipaddr = request.headers.getlist("X-Forwarded-For")[0]
    else:
       ipaddr = request.remote_addr
-   return ipaddr, 200
+   return ipaddr.split(':')[0], 200
 
 @app.route('/favicon.ico')
 def favicon():
