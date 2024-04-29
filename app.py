@@ -2,7 +2,6 @@ import os
 
 from flask import (Flask, redirect, render_template, request, send_from_directory, url_for)
 from flask import jsonify
-from ipwhois import IPWhois
 
 app = Flask(__name__)
 
@@ -15,12 +14,8 @@ def index():
    else:
       print('remote_addr')
       ipaddr = request.remote_addr
-
-   obj = IPWhois(request.remote_addr)
-   whoisInfo = obj.lookup_whois()
-   print(whoisInfo)
    
-   return jsonify({'ip': ipaddr}), 200
+   return ipaddr, 200
 
 @app.route('/favicon.ico')
 def favicon():
