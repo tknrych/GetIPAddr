@@ -15,6 +15,11 @@ def index():
    else:
       print('remote_addr')
       ipaddr = request.remote_addr
+
+   obj = IPWhois(request.remote_addr)
+   whoisInfo = obj.lookup_whois()
+   print(whoisInfo)
+   
    return jsonify({'ip': ipaddr}), 200
 
 @app.route('/favicon.ico')
