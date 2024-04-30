@@ -19,7 +19,7 @@ def index():
     hostnamelst = []
     for ipaddr in ipaddrlst.split(","):
         try:
-            hostnamelst.append(socket.gethostbyaddr(ipaddr)[0])
+            hostnamelst.append(socket.gethostbyaddr(ipaddr.split(":")[0])[0])
         except:
             hostnamelst.append('n/a')
 
