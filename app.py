@@ -5,6 +5,7 @@ from flask import jsonify
 import socket
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 @app.route('/', methods=["GET"])
 def index():
