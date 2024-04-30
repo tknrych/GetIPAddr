@@ -25,7 +25,8 @@ def index():
 
     ipinfo = {'ip':ipaddrlst, 'hostname':','.join(hostnamelst)}
 
-    return jsonify(ipinfo), 200
+    status_code = 200
+    return jsonify(ipinfo), status_code
 
 @app.route('/favicon.ico')
 def favicon():
@@ -38,4 +39,5 @@ def ping():
     return "Ping OK \(^-^)/\n", status_code
    
 if __name__ == '__main__':
-   app.run()
+    app.json.sort_keys = False
+    app.run()
