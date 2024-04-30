@@ -1,6 +1,6 @@
 import os
 
-from flask import (Flask, redirect, render_template, request, send_from_directory, url_for)
+from flask import (Flask, make_response, redirect, render_template, request, send_from_directory, url_for)
 from flask import jsonify
 import socket
 
@@ -23,10 +23,15 @@ def index():
         except:
             hostnamelst.append('n/a')
 
-    ipinfo = {'ip':ipaddrlst, 'hostname':','.join(hostnamelst)}
-
     status_code = 200
-    return jsonify(ipinfo), status_code
+    response = make_response(
+            jsonify(
+                {'ip':ipaddrlst, 'hostname':','.join(hostnamelst)}
+                ),
+                status_code,
+            )
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 @app.route('/favicon.ico')
 def favicon():
