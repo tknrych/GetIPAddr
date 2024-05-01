@@ -12,23 +12,27 @@ def index():
     print('Request for index page received')
     if request.headers.getlist("X-Forwarded-For"):
         print('X-Forwarded-For')
-        ipaddrlst = request.headers.getlist("X-Forwarded-For")[0]
+        ipaddrraw = request.headers.getlist("X-Forwarded-For")[0]
     else:
         print('remote_addr')
-        ipaddrlst = request.remote_addr
-    ipaddrlst = ''.join(ipaddrlst.split())
+        ipaddrraw = request.remote_addr
+    ipaddrraw = ''.join(ipaddrraw.split())
 
+    ipaddrlst = []
     hostnamelst = []
-    for ipaddr in ipaddrlst.split(","):
+    for ipaddr in ipaddrraw.split(","):
+        ipaddrbody = ipaddr.split(":")[0]
+        ipaddrlst.append(ipaddrbody)
+
         try:
-            hostnamelst.append(socket.gethostbyaddr(ipaddr.split(":")[0])[0])
+            hostnamelst.append(socket.gethostbyaddr(ipaddrbody)[0])
         except:
             hostnamelst.append('n/a')
 
     status_code = 200
     response = make_response(
             jsonify(
-                {'ip':ipaddrlst, 'hostname':','.join(hostnamelst)}
+                {'ip':','.join(ipaddrlst), 'hostname':','.join(hostnamelst)}
                 ),
                 status_code,
             )
