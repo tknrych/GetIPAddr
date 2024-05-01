@@ -16,6 +16,7 @@ def index():
     else:
         print('remote_addr')
         ipaddrlst = request.remote_addr
+    ipaddrlst = ''.join(ipaddrlst.split())
 
     hostnamelst = []
     for ipaddr in ipaddrlst.split(","):
