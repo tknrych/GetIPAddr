@@ -37,7 +37,7 @@ def index():
                     'ip':','.join(ipaddrlst), 
                     'hostname':','.join(hostnamelst),
                     'date': str(datetime.now()),
-                    'user_agent': str(request.user_agent),
+                    'user-agent': str(request.user_agent),
                     }
                 ),
                 status_code,
