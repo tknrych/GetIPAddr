@@ -3,7 +3,7 @@ import os
 from flask import (Flask, make_response, redirect, render_template, request, send_from_directory, url_for)
 from flask import jsonify
 import socket
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -30,13 +30,15 @@ def index():
         except:
             hostnamelst.append('n/a')
 
+    JST = timezone(timedelta(hours=+9), 'JST')
+
     status_code = 200
     response = make_response(
             jsonify(
                 {
                     'ip':','.join(ipaddrlst), 
                     'hostname':','.join(hostnamelst),
-                    'date': str(datetime.now()),
+                    'datetime(JST)': str(datetime.now(JST)),
                     'user-agent': str(request.user_agent),
                     }
                 ),
