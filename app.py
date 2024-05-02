@@ -3,6 +3,7 @@ import os
 from flask import (Flask, make_response, redirect, render_template, request, send_from_directory, url_for)
 from flask import jsonify
 import socket
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -32,7 +33,12 @@ def index():
     status_code = 200
     response = make_response(
             jsonify(
-                {'ip':','.join(ipaddrlst), 'hostname':','.join(hostnamelst)}
+                {
+                    'ip':','.join(ipaddrlst), 
+                    'hostname':','.join(hostnamelst),
+                    'date': str(datetime.now()),
+                    'user_agent': str(request.user_agent),
+                    }
                 ),
                 status_code,
             )
