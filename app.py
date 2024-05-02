@@ -4,6 +4,7 @@ from flask import (Flask, make_response, redirect, render_template, request, sen
 from flask import jsonify
 import socket
 from datetime import datetime, timedelta, timezone
+from pytz import timezone
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -30,8 +31,8 @@ def index():
         except:
             hostnamelst.append('n/a')
 
-    UTC = timezone(timedelta(hours=+0), 'UTC')
-    JST = timezone(timedelta(hours=+9), 'JST')
+    utc_now = datetime.now(timezone('UTC'))
+    jst_now = utc_now.astimezone(timezone('Asia/Tokyo'))
 
     status_code = 200
     response = make_response(
@@ -39,9 +40,9 @@ def index():
                 {
                     'ip':','.join(ipaddrlst), 
                     'hostname':','.join(hostnamelst),
-                    'datetime(UTC)': str(datetime.now(UTC)),
-                    'datetime(JST)': str(datetime.now(JST)),
                     'user-agent': str(request.user_agent),
+                    'datetime(UTC)': str(utc_now),
+                    'datetime(JST)': str(jst_now),
                     }
                 ),
                 status_code,
