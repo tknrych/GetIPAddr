@@ -30,6 +30,7 @@ def index():
         except:
             hostnamelst.append('n/a')
 
+    UTC = timezone(timedelta(hours=+0), 'UTC')
     JST = timezone(timedelta(hours=+9), 'JST')
 
     status_code = 200
@@ -38,6 +39,7 @@ def index():
                 {
                     'ip':','.join(ipaddrlst), 
                     'hostname':','.join(hostnamelst),
+                    'datetime(UTC)': str(datetime.now(UTC)),
                     'datetime(JST)': str(datetime.now(JST)),
                     'user-agent': str(request.user_agent),
                     }
