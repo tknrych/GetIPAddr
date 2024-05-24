@@ -5,6 +5,7 @@ from flask import jsonify
 import socket
 from datetime import datetime, timedelta, timezone
 from pytz import timezone
+import whois
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -34,6 +35,11 @@ def index():
     utc_now = datetime.now(timezone('UTC'))
     jst_now = utc_now.astimezone(timezone('Asia/Tokyo'))
 
+    try:
+        whois_json = whois.whois(ipaddrlst[0])
+    except:
+        whois_json = {}
+
     status_code = 200
     response = make_response(
             jsonify(
@@ -43,6 +49,7 @@ def index():
                     'user-agent': str(request.user_agent),
                     'datetime(UTC)': str(utc_now),
                     'datetime(Asia/Tokyo)': str(jst_now),
+                    'whois': whois_json,
                     }
                 ),
                 status_code,
