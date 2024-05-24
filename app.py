@@ -49,7 +49,7 @@ def index():
                     'user-agent': str(request.user_agent),
                     'datetime(UTC)': str(utc_now),
                     'datetime(Asia/Tokyo)': str(jst_now),
-                    'whois': whois_json,
+                    'whois(ip)': whois_json,
                     }
                 ),
                 status_code,
